@@ -7,11 +7,11 @@ public class CameraControll : MonoBehaviour
     [Header("攝影機移動速度")]
     public float cameraSpeed;
 
-    [Header("限制高度"),Range(0,16)]
-    public float top = 16;
+    [Header("限制高度"),Range(-16,-0)]
+    public float top = -16;
     
     [Header("限制最底")]
-    public float bottom = 0;
+    public float bottom = -9;
 
     public void Start()
     {
@@ -36,6 +36,6 @@ public class CameraControll : MonoBehaviour
 
         posPlayer.z = Mathf.Clamp(posPlayer.z, top, bottom);
 
-        transform.position = Vector3.Lerp(posCamera, posPlayer, 0.5f * Time.deltaTime * cameraSpeed);
+        transform.position = Vector3.Lerp(posPlayer, posCamera, 0.5f * Time.deltaTime * cameraSpeed);
     }
 }

@@ -34,8 +34,5 @@ public class play : MonoBehaviour
         //讓腳色看相目標
         transform.LookAt(posAims);
 
-
-
-
     }
 }
