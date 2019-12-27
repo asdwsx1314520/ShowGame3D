@@ -3378,7 +3378,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1539645461}
   m_OnClick:
     m_PersistentCalls:
@@ -3459,6 +3459,10 @@ MonoBehaviour:
   - {fileID: -7375718083438830016, guid: 8178e9d6a9adf1547820adb903b83f32, type: 3}
   - {fileID: -5502065018778706933, guid: 8178e9d6a9adf1547820adb903b83f32, type: 3}
   speed: 0.02
+  count: 3
+  btn: {fileID: 1539645460}
+  textName: {fileID: 320188010}
+  skillPanel: {fileID: 1934865227}
 --- !u!43 &1585566364
 Mesh:
   m_ObjectHideFlags: 0
