@@ -9,6 +9,14 @@ public class play : MonoBehaviour
     public Animator anim;
     public Transform aims;
 
+    public LevelManager gm;
+
+    public void Start()
+    {
+        //抓取有此物件的物件
+        gm = FindObjectOfType<LevelManager>();
+    }
+
     private void FixedUpdate()
     {
         Move();
@@ -34,5 +42,13 @@ public class play : MonoBehaviour
         //讓腳色看相目標
         transform.LookAt(posAims);
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.name == "TIRGGER")
+        {
+            gm.StartCoroutine("nextLevel");
+        }
     }
 }
