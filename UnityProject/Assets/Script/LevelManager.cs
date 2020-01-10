@@ -37,9 +37,11 @@ public class LevelManager : MonoBehaviour
 
     public IEnumerator nextLevel()
     {
-        returnScene.color += new Color(0, 0, 0, 0.01f);
-        yield return new WaitForSeconds(0.001f);
-        StartCoroutine("nextLevel");
 
+        for (int i = 0; i < 100; i++)
+        {
+            returnScene.color += new Color(0, 0, 0, 0.01f);
+            yield return new WaitForSeconds(0.001f);
+        }
     }
 }
