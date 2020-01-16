@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;// 引用場景管理
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -37,11 +37,18 @@ public class LevelManager : MonoBehaviour
 
     public IEnumerator nextLevel()
     {
+        //非同步載入場景,等待場景載入完畢(預載)
+        AsyncOperation async = SceneManager.LoadSceneAsync("Level_two");
+
+        async.allowSceneActivation = false;
 
         for (int i = 0; i < 100; i++)
         {
             returnScene.color += new Color(0, 0, 0, 0.01f);
             yield return new WaitForSeconds(0.001f);
         }
+
+        //允許載入
+        async.allowSceneActivation = true;
     }
 }
