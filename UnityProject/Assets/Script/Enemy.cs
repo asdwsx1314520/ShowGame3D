@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Attack()
+    protected virtual void Attack()
     {
         timer = 0;
         ani.SetTrigger("Attack");
