@@ -34,6 +34,14 @@ public class Enemy : MonoBehaviour
     {
         agent.SetDestination(targe.position);
 
+        //玩家的位置
+        Vector3 targetPos = targe.position; // 區域變數 目標座標 = 玩家座標
+        targetPos.y = transform.position.y; // 目標座標.y = 自己的y
+        transform.LookAt(targetPos);        // 看向(目標座標)
+
+
+        // remainingDistance 跟目標物的距離
+        // 如果進入停止距離範圍內 就等待 否則跑步
         if (agent.remainingDistance < agent.stoppingDistance)
         {
             Wait();

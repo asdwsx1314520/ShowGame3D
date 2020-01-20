@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Dragon
   m_EditorClassIdentifier: 
   hp: 250
-  attack: 80
-  cd: 3
+  attack: 100
+  cd: 2
   speed: 0
+  stopDistance: 100
+  nearAttackLength: 0
+  nearAttackPos: {x: 0, y: 0, z: 0}
+  nearAttackDelay: 0

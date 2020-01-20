@@ -20,6 +20,9 @@ public class EnemyNear : Enemy
         Gizmos.DrawRay(transform.position + data.nearAttackPos, transform.forward * data.nearAttackLength);
     }
 
+    /// <summary>
+    /// 近距離攻擊: 複寫父類別,添加攻擊延遲
+    /// </summary>
     protected override void Attack()
     {
         base.Attack();
@@ -27,6 +30,10 @@ public class EnemyNear : Enemy
         StartCoroutine(DelayAttack());
     }
 
+    /// <summary>
+    /// 延遲攻擊: 利用射線攻擊玩家
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator DelayAttack()
     {
         yield return new WaitForSeconds(data.nearAttackDelay);
@@ -35,7 +42,7 @@ public class EnemyNear : Enemy
 
         if(Physics.Raycast(transform.position + data.nearAttackPos, transform.forward, out hit, data.nearAttackLength))
         {
-            print(hit.collider.name);
+            hit.collider.GetComponent<play>().Hit(data.attack);
         }
     }
 }

@@ -6,20 +6,39 @@ public class play : MonoBehaviour
     public Joystick joysitck;
     public float speed;
 
+    [Header("玩家資料")]
+    public PlayerData data;
+
     public Animator anim;
     public Transform aims;
 
     public LevelManager gm;
 
+    private HpDamage hpDamage;
+
     public void Start()
     {
         //抓取有此物件的物件
         gm = FindObjectOfType<LevelManager>();
+
+        hpDamage = GetComponentInChildren<HpDamage>(); //取得子物件的元件 (僅限於子物件只有一個)
     }
 
     private void FixedUpdate()
     {
         Move();
+    }
+
+    /// <summary>
+    /// 進入下個關卡
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.name == "TIRGGER")
+        {
+            gm.StartCoroutine("nextLevel");
+        }
     }
 
     public void Move()
@@ -44,11 +63,27 @@ public class play : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    /// <summary>
+    /// 受傷
+    /// </summary>
+    /// <param name="damage">接收傷害值</param>
+    public void Hit(float damage)
     {
-        if(other.name == "TIRGGER")
+        data.hp -= damage;
+        hpDamage.UpdataeHpBar(data.hp, data.hpMax);
+
+        StartCoroutine(hpDamage.ShowValue(damage, "-", Vector3.one, Color.white));
+        if(data.hp <= 0)
         {
-            gm.StartCoroutine("nextLevel");
+            Dead();
         }
     }
+
+    private void Dead() 
+    {
+        anim.SetBool("Dead", true);
+
+        enabled = false;                //取消此類別運作
+    }
+    
 }
