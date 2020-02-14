@@ -8,6 +8,8 @@ public class play : MonoBehaviour
 
     [Header("玩家資料")]
     public PlayerData data;
+    [Header("武器")]
+    public GameObject bullet;
 
     public Animator anim;
     public Transform aims;
@@ -15,6 +17,8 @@ public class play : MonoBehaviour
     public LevelManager gm;
 
     private HpDamage hpDamage;
+
+    private float timer;        //計時器
 
     public void Start()
     {
@@ -61,6 +65,11 @@ public class play : MonoBehaviour
         //讓腳色看相目標
         transform.LookAt(posAims);
 
+        if(v == 0 && h == 0)
+        {
+            Attack();
+        }
+
     }
 
     /// <summary>
@@ -84,6 +93,38 @@ public class play : MonoBehaviour
         anim.SetBool("Dead", true);
 
         enabled = false;                //取消此類別運作
+
+        StartCoroutine(gm.ShowRevival());
+    }
+
+    /// <summary>
+    /// 玩家復活
+    /// </summary>
+    public void Revival()
+    {
+        enabled = true;
+        anim.SetBool("Dead", false);
+        data.hp = data.hpMax;
+        hpDamage.UpdataeHpBar(data.hp, data.hpMax);
+        gm.CloseRevival();
+    }
+
+    public void Attack()
+    {
+        if (timer < data.cd)
+        {
+            timer += Time.deltaTime;
+        }
+        else
+        {
+            timer = 0;
+
+            Vector3 pos = transform.position + transform.up * 1 + transform.forward * 1.5f;
+
+            Quaternion qua = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + 180, transform.eulerAngles.z);
+
+            Instantiate(bullet, pos, qua);
+        }
     }
     
 }

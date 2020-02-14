@@ -12,6 +12,9 @@ public class LevelManager : MonoBehaviour
     public bool isOpen;
     public bool isDisplaySkill;
 
+    [Header("復活介面")]
+    public GameObject panelRevival;
+
     private void Start()
     {
         if (isOpen)
@@ -51,4 +54,30 @@ public class LevelManager : MonoBehaviour
         //允許載入
         async.allowSceneActivation = true;
     }
+
+    /// <summary>
+    /// 顯示復活介面
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator ShowRevival()
+    {
+        panelRevival.SetActive(true);
+
+        for (int i = 3; i > 0; i--)
+        {
+            panelRevival.transform.GetChild(1).GetComponent<Text>().text = i.ToString();
+            yield return new WaitForSeconds(1);
+        }
+    }
+
+    /// <summary>
+    /// 關閉復活介面
+    /// </summary>
+    public void CloseRevival()
+    {
+        StopCoroutine(ShowRevival());
+        panelRevival.SetActive(false);
+    }
 }
+
+

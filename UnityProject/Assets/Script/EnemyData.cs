@@ -23,4 +23,7 @@ public class EnemyData : ScriptableObject
     public Vector3 nearAttackPos;
     [Header("攻擊延遲"), Range(0, 3)]
     public float nearAttackDelay;
+
+    [Header("遠距離單位: 發射子彈的力道"), Range(0, 3000)]
+    public float FarPower;
 }

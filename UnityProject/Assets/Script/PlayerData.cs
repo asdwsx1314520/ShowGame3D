@@ -8,4 +8,10 @@ public class PlayerData : ScriptableObject
     public float hp = 200;
 
     public float hpMax;
+
+    [Header("攻擊速度"), Range(200, 3000)]
+    public float cd = 0.8f;
+
+    [Header("武器速度"), Range(200, 3000)]
+    public float power = 500;
 }
