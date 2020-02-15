@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Dragon
   m_EditorClassIdentifier: 
   hp: 250
-  attack: 100
+  hpMax: 250
+  attack: 0
   cd: 2
   speed: 0
   stopDistance: 100
@@ -21,3 +22,4 @@ MonoBehaviour:
   nearAttackPos: {x: 0, y: 3, z: 3.5}
   nearAttackDelay: 0
   FarPower: 1000
+  coinRandom: {x: 10, y: 20}

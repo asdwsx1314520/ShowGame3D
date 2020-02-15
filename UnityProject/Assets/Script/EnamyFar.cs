@@ -29,6 +29,7 @@ public class EnamyFar : Enemy
 
         Buttle buttle =  temp.AddComponent<Buttle>();
         buttle.damage = data.attack;
+        buttle.playerBuller = false;
     }
 
 }

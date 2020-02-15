@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;      //引用查詢語法
 
 public class play : MonoBehaviour
 {
@@ -18,7 +19,10 @@ public class play : MonoBehaviour
 
     private HpDamage hpDamage;
 
-    private float timer;        //計時器
+    private float timer;            //計時器
+
+    private Enemy[] enemys;         //獲取所有敵人陣列
+    private float[] enemysDistance; //獲取所有敵人的距離
 
     public void Start()
     {
@@ -117,13 +121,45 @@ public class play : MonoBehaviour
         }
         else
         {
+            //搜尋所有敵人
+            enemys = FindObjectsOfType<Enemy>();        //取得所有敵人
+            enemysDistance = new float[enemys.Length];  //指定敵人距離陣列長度
+
+            if (enemys.Length == 0) 
+            {
+                gm.Pass();
+                return; 
+            }
+
             timer = 0;
+            anim.SetTrigger("Attack");
+
+            //檢查所有敵人得距離(誰最近)
+            for (int i = 0; i < enemys.Length; i++)
+            {
+                enemysDistance[i] = Vector3.Distance(transform.position, enemys[i].transform.position);
+            }
+
+            float min = enemysDistance.ToList().Min();  //取得最小值
+
+            //一般陣列無法使用,轉回清單 List (集合)
+            int index = enemysDistance.ToList().IndexOf(min);   //取得最小得編號
+
+            //面向最近的敵人
+            Vector3 posEnemy = enemys[index].transform.position;
+            posEnemy.y = transform.position.y;
+            transform.LookAt(posEnemy);
 
             Vector3 pos = transform.position + transform.up * 1 + transform.forward * 1.5f;
 
             Quaternion qua = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + 180, transform.eulerAngles.z);
 
-            Instantiate(bullet, pos, qua);
+            GameObject temp = Instantiate(bullet, pos, qua);
+            temp.GetComponent<Rigidbody>().AddForce(transform.forward * data.power);
+
+            temp.AddComponent<Buttle>();
+            temp.GetComponent<Buttle>().damage = data.attack;
+            temp.GetComponent<Buttle>().playerBuller = true;
         }
     }
     

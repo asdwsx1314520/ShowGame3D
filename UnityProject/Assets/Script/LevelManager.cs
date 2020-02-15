@@ -78,6 +78,22 @@ public class LevelManager : MonoBehaviour
         StopCoroutine(ShowRevival());
         panelRevival.SetActive(false);
     }
+
+    /// <summary>
+    /// 過關
+    /// </summary>
+    public void Pass()
+    {
+        openDool();
+
+        Item[] coins = FindObjectsOfType<Item>();
+
+        for (int i = 0; i < coins.Length; i++)
+        {
+            coins[i].pass = true;
+        }
+
+    }
 }
 
 

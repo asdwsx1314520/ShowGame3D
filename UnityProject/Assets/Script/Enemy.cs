@@ -4,15 +4,22 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     [Header("敵人資料")]
-    public EnemyData data;
+    public EnemyData data;          //靜態 (所有使用此腳本參數的角色共用)
 
     private Animator ani;
-    private NavMeshAgent agent;
+    private NavMeshAgent agent;     // AI 系統
 
     private Transform targe;
 
+    //血量死傷害系統控制器
+    private HpDamage hpDamage;
+    private float hp;               //每隻怪物獨立的血量
+
     //計時器
     private float timer;
+
+    [Header("金幣")]
+    public GameObject coin;
 
     private void Start()
     {
@@ -22,7 +29,10 @@ public class Enemy : MonoBehaviour
         agent.speed = data.speed;
         agent.stoppingDistance = data.stopDistance;
 
+        hp = data.hp;
+
         targe = GameObject.Find("Hero").transform;
+        hpDamage = GetComponentInChildren<HpDamage>(); //取得子物件的元件 (僅限於子物件只有一個)
     }
 
     private void Update()
@@ -32,6 +42,8 @@ public class Enemy : MonoBehaviour
 
     public void Move()
     {
+        if (ani.GetBool("Dead")) return;
+
         agent.SetDestination(targe.position);
 
         //玩家的位置
@@ -68,14 +80,32 @@ public class Enemy : MonoBehaviour
         ani.SetTrigger("Attack");
     }
 
+    /// <summary>
+    /// 受傷
+    /// </summary>
+    /// <param name="damage"></param>
     public void Hit(float damage)
     {
+        hp -= damage;
+        hpDamage.UpdataeHpBar(hp, data.hpMax);
 
+        StartCoroutine(hpDamage.ShowValue(damage, "-", Vector3.one, Color.white));
+        if (hp <= 0)
+        {
+            Dead();
+        }
     }
 
     public void Dead()
     {
+        ani.SetBool("Dead", true);
+        agent.isStopped = true;
 
+        Destroy(this);              //刪除此腳本
+
+        Destroy(this.gameObject, 1.5f);
+
+        Prop();
     }
 
     /// <summary>
@@ -83,7 +113,12 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public void Prop()
     {
+        int r = (int)Random.Range(data.coinRandom.x, data.coinRandom.y);
 
+        for (int i = 0; i < r; i++)
+        {
+            Instantiate(coin, transform.position + new Vector3(1, coin.transform.position.y, 1), Quaternion.identity);
+        }
     }
 
 }

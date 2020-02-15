@@ -7,6 +7,7 @@ public class EnemyData : ScriptableObject
 {
     [Header("血量"), Range(10, 300)]
     public float hp;
+    public float hpMax;
     [Header("攻擊"), Range(0, 1000)]
     public float attack;
     [Header("攻擊冷卻時間"), Range(0, 5)]
@@ -26,4 +27,6 @@ public class EnemyData : ScriptableObject
 
     [Header("遠距離單位: 發射子彈的力道"), Range(0, 3000)]
     public float FarPower;
+    [Header("掉落金幣數量")]
+    public Vector2 coinRandom;
 }

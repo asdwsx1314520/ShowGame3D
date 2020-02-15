@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 200
   hpMax: 200
+  cd: 0.8
+  power: 500
+  attack: 200
