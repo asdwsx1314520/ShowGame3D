@@ -16,6 +16,7 @@ public class Buttle : MonoBehaviour
             if(other.name == "Hero")
             {
                 other.GetComponent<play>().Hit(damage);
+                Destroy(gameObject);
             }
         }
         else

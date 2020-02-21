@@ -40,8 +40,21 @@ public class LevelManager : MonoBehaviour
 
     public IEnumerator nextLevel()
     {
-        //非同步載入場景,等待場景載入完畢(預載)
-        AsyncOperation async = SceneManager.LoadSceneAsync("Level_two");
+        AsyncOperation async;
+
+        //判斷當前關卡名稱是否有boss
+        if (SceneManager.GetActiveScene().name.Contains("boss"))
+        {
+            async = SceneManager.LoadSceneAsync(0);
+        }
+        else
+        {
+            //判斷目前場景的編號
+            int index = SceneManager.GetActiveScene().buildIndex;
+
+            //非同步載入場景,等待場景載入完畢(預載)
+            async = SceneManager.LoadSceneAsync(++index);
+        }
 
         async.allowSceneActivation = false;
 
